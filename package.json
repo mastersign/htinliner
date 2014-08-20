@@ -1,0 +1,36 @@
+{
+  "name": "svginline",
+  "version": "0.1.0",
+  "description": "Inlines SVG images into HTML documents.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape ./tests/*.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mastersign/svginline.git"
+  },
+  "keywords": [
+    "SVG",
+    "HTML",
+    "Gulp",
+    "include",
+    "embed"
+  ],
+  "author": "Tobias Kiertscher <dev@mastersign.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mastersign/svginline/issues"
+  },
+  "homepage": "https://github.com/mastersign/svginline",
+  "dependencies": {
+    "through2": "^0.6.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.7",
+    "gulp-shell": "^0.2.9",
+    "tap-spec": "^0.2.0",
+    "tape": "^2.14.0",
+    "vinyl": "^0.3.2"
+  }
+}
