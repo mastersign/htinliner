@@ -2,6 +2,7 @@
   "name": "svginline",
   "version": "0.1.0",
   "description": "Inlines SVG images into HTML documents.",
+  "readme": "README.md",
   "main": "index.js",
   "scripts": {
     "test": "tape ./tests/*.js | tap-spec"
