@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/mastersign/htinliner",
   "dependencies": {
+    "cheerio": "^0.17.0",
     "through2": "^0.6.1"
   },
   "devDependencies": {
