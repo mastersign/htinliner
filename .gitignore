@@ -1,2 +1,4 @@
 /node_modules
+/tests/tmp
+
 *.sublime-workspace
