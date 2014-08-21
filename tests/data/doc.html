@@ -1,14 +1,43 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Test Document</title>
+
+	<meta charset="UTF-8">
+
+	<link rel="stylesheet" type="text/css" href="style1.css">
+	<link rel="stylesheet" href="style2.css">
+	<link rel="stylesheet" type="text/css" href="http://127.0.0.1/style3.css">
+	<link rel="something" href="local.file">
+
+	<script type="text/javascript" src="script1.js"></script>
+	<script type="text/javascript">
+		var x = 1;
+		var y = 2;
+	</script>
 </head>
 <body>
 	<h1>Test Document</h1>
 	<p>
-		<img src="../data/image.svg" width="400" />
+		Should be replaced by SVG markup with a width of 400px.
+		<img src="../data/image.svg" width="400" height="400" />
 	</p>
 	<p>
-		<img src="image.svg" width="200" />
+		Should be replaced by SVG markup with a height of 200px;
+		<img src="image.svg" style="height: 200px;" />
 	</p>
+	<p>
+		Should not try to inline images with a remote URL.
+		<img id="remoteimg" src="http://127.0.0.1/image.svg" />
+	</p>
+	<p>
+		Should not try to inline non SVG images.
+		<img id="nonsvgimg" src="image.png" />
+	</p>
+	<script id="footscript" language="javascript" src="script2.js">
+	//<![CDATA[
+		window.alert('inline script: ' + x + ' + ' + y + ' = ' + (x + y));
+	//]]>
+	</script>
 </body>
 </html>

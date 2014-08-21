@@ -1,7 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 
 <!-- SVG starts here -->
-
-<svg height="400" width="450">
+<svg xmlns="http://www.w3.org/2000/svg" 
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="225" height="200" viewBox="0 0 500 400" >
 <path id="lineAB" d="M 100 350 l 150 -300" stroke="red" stroke-width="3" fill="none" />
   <path id="lineBC" d="M 250 50 l 150 300" stroke="red" stroke-width="3" fill="none" />
   <path d="M 175 200 l 150 0" stroke="green" stroke-width="3" fill="none" />
@@ -19,5 +23,4 @@
     <text x="400" y="350" dx="30">C</text>
   </g>
 </svg>
-
 <!-- SVG ends here -->

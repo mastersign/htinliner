@@ -1,0 +1,6 @@
+.htinliner {
+	display: inline-block;
+	border: 1px solid #AAA;
+	padding: 1em;
+	background-color: #DDD;
+}
