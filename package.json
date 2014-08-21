@@ -1,7 +1,7 @@
 {
-  "name": "svginline",
+  "name": "htinliner",
   "version": "0.1.0",
-  "description": "Inlines SVG images into HTML documents.",
+  "description": "Inlines linked CSS files, linked script files, and SVG images into HTML documents.",
   "readme": "README.md",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mastersign/svginline.git"
+    "url": "https://github.com/mastersign/htinliner.git"
   },
   "keywords": [
     "SVG",
@@ -21,9 +21,9 @@
   "author": "Tobias Kiertscher <dev@mastersign.de>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mastersign/svginline/issues"
+    "url": "https://github.com/mastersign/htinliner/issues"
   },
-  "homepage": "https://github.com/mastersign/svginline",
+  "homepage": "https://github.com/mastersign/htinliner",
   "dependencies": {
     "through2": "^0.6.1"
   },
