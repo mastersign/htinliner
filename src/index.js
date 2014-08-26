@@ -16,13 +16,21 @@ var defOpt = {
 
 var option = function(name, opt) {
 	return opt ? (opt[name] || defOpt[name]) : defOpt[name];
-}
+};
+
+var fixLengthUnit = function(value, defUnit) {
+	return value ? 
+		(value.trim().match(/\d$/) ? 
+			value.trim() + (defUnit || 'px') : 
+			value) : 
+		null;
+};
 
 var fixSvgSize = function(svgSource, remove, width, height) {
 	var $ = cheerio.load(svgSource, { xmlMode: true });
 	var svg = $('svg');
-	if (width && width.trim().match(/^\d+$/)) { width = width + 'px'; }
-	if (height && height.trim().match(/^\d+$/)) { height = height + 'px'; }
+	width = fixLengthUnit(width);
+	height = fixLengthUnit(height);
 	if (remove) {
 		svg.removeAttr('width');
 		svg.removeAttr('height');
@@ -32,12 +40,12 @@ var fixSvgSize = function(svgSource, remove, width, height) {
 		if (width) {
 			svg.css('width', width);
 		} else if (!svg.css('width')) {
-			svg.css('width', svg.attr('width') + 'px');
+			svg.css('width', fixLengthUnit(svg.attr('width')));
 		}
 		if (height) {
 			svg.css('height', height);
 		} else if (!svg.css('height')) {
-			svg.css('height', svg.attr('height') + 'px');
+			svg.css('height', fixLengthUnit(svg.attr('height')));
 		}
 		svg.removeAttr('width');
 		svg.removeAttr('height');
