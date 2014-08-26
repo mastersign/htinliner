@@ -67,8 +67,10 @@ var getPathFromUrl = function(src, ext) {
 
 var inline = function(htmlSource, sourcePath, opt) {
 	var $;
+	var basePath = fs.lstatSync(sourcePath).isDirectory() ?
+		sourcePath : path.dirname(sourcePath);
 	var buildSrcPath = function(src) {
-		return path.resolve(path.dirname(sourcePath), src);
+		return path.resolve(basePath, src);
 	};
 	var svgs = {};
 	var cnt = 0;
