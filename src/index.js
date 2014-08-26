@@ -70,6 +70,9 @@ var inline = function(htmlSource, sourcePath, opt) {
 	var buildSrcPath = function(src) {
 		return path.resolve(path.dirname(sourcePath), src);
 	};
+	var svgs = {};
+	var cnt = 0;
+	var result;
 	sourcePath = sourcePath || '.';
 	if (htmlSource instanceof Buffer) {
 		htmlSource = htmlSource.toString(option('encoding', opt));
@@ -120,6 +123,8 @@ var inline = function(htmlSource, sourcePath, opt) {
 			var height = $(elem).css('height') || $(elem).attr('height');
 			var svgData, svgSource;
 			var prefix, postfix;
+			var replaceId = 'htinliner_svg_id_' + cnt;
+			cnt = cnt + 1;
 			if (!src) return;
 			svgData = fs.readFileSync(buildSrcPath(src));
 			svgSource = fixSvgSize(svgData, option('svgRemoveSize', opt), width, height);
@@ -131,10 +136,15 @@ var inline = function(htmlSource, sourcePath, opt) {
 				prefix = '';
 				postfix = '';
 			}
-			$(elem).replaceWith(prefix + svgSource + postfix);
+			svgs[replaceId] = prefix + svgSource + postfix;
+			$(elem).replaceWith(replaceId);
 		});
 	}
-	return $.xml();
+	result = $.html();
+	for (svgId in svgs) {
+		result = result.replace(svgId, svgs[svgId]);
+	}
+	return result;
 };
 
 var htinliner = function() {
