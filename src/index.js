@@ -147,6 +147,9 @@ var htinliner = function() {
 	return through.obj(function(file, enc, cb) {
 		var sourcePath = path.resolve(file.cwd, file.path);
 		var sourceHtml;
+		if (opt && opt.basePath) {
+			sourcePath = opt.basePath;
+		}
 		if (file.isNull()) {
 			// pass
 			this.push(file);

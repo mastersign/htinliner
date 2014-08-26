@@ -19,6 +19,8 @@ It supports the following options:
 * `inlineSvgImages`  
   a boolean indicating, that `<img src="...somthing.svg">` tags should be
   replaced by the SVG markup from the referenced image file.
+* `basePath`  
+  a file or folder name, which is used as base path for resolving the relative paths of the inlined files.
 * `svgRemoveSize`  
   a boolean indicating, that the specified width and height should be removed
   from the SVG markup.
@@ -38,6 +40,7 @@ The default options are:
     inlineStylesheets: true,
     inlineScripts: true,
     inlineSvgImages: true,
+    basePath; null,
     svgRemoveSize: false,
     svgWrap: true,
     svgWrapElement: 'span',
