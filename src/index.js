@@ -19,11 +19,9 @@ var option = function(name, opt) {
 };
 
 var fixLengthUnit = function(value, defUnit) {
-	return value ? 
-		(value.trim().match(/\d$/) ? 
-			value.trim() + (defUnit || 'px') : 
-			value) : 
-		null;
+	if (!value) { return value; }
+	value = value.trim();
+	return value.match(/^\d+$/) ? (value + (defUnit || 'px')) : value;
 };
 
 var fixSvgSize = function(svgSource, remove, width, height) {
