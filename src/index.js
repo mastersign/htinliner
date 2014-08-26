@@ -25,7 +25,7 @@ var fixLengthUnit = function(value, defUnit) {
 };
 
 var fixSvgSize = function(svgSource, remove, width, height) {
-	var $ = cheerio.load(svgSource, { xmlMode: true,  decodeEntities: false, recognizeSelfClosing: true });
+	var $ = cheerio.load(svgSource, { xmlMode: true,  decodeEntities: false });
 	var svg = $('svg');
 	width = fixLengthUnit(width);
 	height = fixLengthUnit(height);
@@ -74,7 +74,7 @@ var inline = function(htmlSource, sourcePath, opt) {
 	if (htmlSource instanceof Buffer) {
 		htmlSource = htmlSource.toString(option('encoding', opt));
 	}
-	$ = cheerio.load(htmlSource);
+	$ = cheerio.load(htmlSource, { xmlMode: true, decodeEntities: false });
 
 	if (option('inlineStylesheets', opt)) {
 		$('link[rel="stylesheet"]', 'head').each(function(i, elem) {
