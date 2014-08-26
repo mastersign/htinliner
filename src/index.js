@@ -25,7 +25,7 @@ var fixLengthUnit = function(value, defUnit) {
 };
 
 var fixSvgSize = function(svgSource, remove, width, height) {
-	var $ = cheerio.load(svgSource, { xmlMode: true });
+	var $ = cheerio.load(svgSource, { xmlMode: true,  decodeEntities: false, recognizeSelfClosing: true });
 	var svg = $('svg');
 	width = fixLengthUnit(width);
 	height = fixLengthUnit(height);
