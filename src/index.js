@@ -74,8 +74,8 @@ var inline = function(htmlSource, sourcePath, opt) {
 	if (htmlSource instanceof Buffer) {
 		htmlSource = htmlSource.toString(option('encoding', opt));
 	}
-	$ = cheerio.load(htmlSource, { xmlMode: true, decodeEntities: false });
-
+	$ = cheerio.load(htmlSource, { xmlMode: false, decodeEntities: false });
+	
 	if (option('inlineStylesheets', opt)) {
 		$('link[rel="stylesheet"]', 'head').each(function(i, elem) {
 			var src = getPathFromUrl($(elem).attr('href'));
