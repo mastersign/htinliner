@@ -25,14 +25,14 @@
   },
   "homepage": "https://github.com/mastersign/htinliner",
   "dependencies": {
-    "cheerio": "^0.17.0",
-    "through2": "^0.6.1"
+    "cheerio": "^0.19.0",
+    "through2": "^2.0.0"
   },
   "devDependencies": {
-    "gulp": "^3.8.11",
+    "gulp": "^3.0.0",
     "gulp-shell": "^0.2.9",
     "tap-spec": "^0.2.0",
-    "tape": "^2.14.0",
-    "vinyl": "^0.3.2"
+    "tape": "^2.0.0",
+    "vinyl": "^0.3.0"
   }
 }
