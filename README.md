@@ -121,5 +121,5 @@ _HTinliner_ is published under the MIT license.
 [npm-img]: https://img.shields.io/npm/v/htinliner.svg
 [travis-img]: https://img.shields.io/travis/mastersign/htinliner/master.svg
 [travis-url]: https://travis-ci.org/mastersign/htinliner
-[Gulp]: http://gulp.js
+[Gulp]: http://gulpjs.com
 [gulp-text-simple]: https://www.npmjs.com/package/gulp-text-simple
