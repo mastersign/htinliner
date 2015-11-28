@@ -29,10 +29,5 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "gulp": "^3.0.0",
-    "gulp-shell": "^0.2.9",
-    "tap-spec": "^0.2.0",
-    "tape": "^2.0.0",
-    "vinyl": "^0.3.0"
   }
 }
