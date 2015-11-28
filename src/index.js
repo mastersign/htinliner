@@ -1,10 +1,12 @@
-var through = require('through2');
+/* globals require */
+
 var path = require('path');
 var fs = require('fs');
 var url = require('url');
 var cheerio = require('cheerio');
+var textTransformation = require('gulp-text-simple');
 
-var defOpt = { 
+var defOpt = {
 	inlineStylesheets: true,
 	inlineScripts: true,
 	inlineSvgImages: true,
@@ -58,7 +60,7 @@ var getPathFromUrl = function(src, ext) {
 	if (!srcUrl ||
 		srcUrl.protocol ||
 		!srcUrl.pathname ||
-		(ext && srcUrl.pathname.slice(-4).toLowerCase() !== ext)) { 
+		(ext && srcUrl.pathname.slice(-4).toLowerCase() !== ext)) {
 
 		return null;
 	}
@@ -73,6 +75,7 @@ var inline = function(htmlSource, sourcePath, opt) {
 		return path.resolve(basePath, src);
 	};
 	var svgs = {};
+	var svgId;
 	var cnt = 0;
 	var result;
 	sourcePath = sourcePath || '.';
@@ -80,7 +83,7 @@ var inline = function(htmlSource, sourcePath, opt) {
 		htmlSource = htmlSource.toString(option('encoding', opt));
 	}
 	$ = cheerio.load(htmlSource, { xmlMode: false, decodeEntities: false });
-	
+
 	if (option('inlineStylesheets', opt)) {
 		$('link[rel="stylesheet"]', 'head').each(function(i, elem) {
 			var src = getPathFromUrl($(elem).attr('href'));
@@ -149,32 +152,9 @@ var inline = function(htmlSource, sourcePath, opt) {
 	return result;
 };
 
-var htinliner = function() {
-	if (arguments.length > 0 && 
-		(typeof(arguments[0]) === 'string' ||
-		 arguments[0] instanceof Buffer)) {
-		return inline(arguments[0], arguments[1], arguments[2]);
-	}
-	var opt = arguments[0];
-	return through.obj(function(file, enc, cb) {
-		var sourcePath = path.resolve(file.cwd, file.path);
-		var sourceHtml;
-		if (opt && opt.basePath) {
-			sourcePath = opt.basePath;
-		}
-		if (file.isNull()) {
-			// pass
-			this.push(file);
-			cb();
-		} else if (file.isBuffer()) {
-			sourceHtml = file.contents;
-			file.contents = new Buffer(inline(sourceHtml, sourcePath, opt));
-			this.push(file);
-			cb();
-		} else if (file.isStream()) {
-			throw 'Streams are currently not supported.';
-		}
-	});
-};
+var htinliner = textTransformation(function (text, options) {
+	var sourcePath = (options && options.sourcePath) ? options.sourcePath : './unknown';
+	return inline(text, sourcePath, options);
+});
 
 module.exports = htinliner;
