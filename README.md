@@ -1,14 +1,13 @@
 # HTinliner
 
-Inlines linked CSS files, linked script files, and SVG images into HTML documents.
+[![npm package][npm-img]][npm-url]
+[![build status][travis-img]][travis-url]
 
-Author: Tobias Kiertscher <dev@mastersign.de>
-
-License: MIT
+> inlining linked CSS files, linked script files, and SVG images into HTML documents
 
 ## Usage
 
-The HTinliner can be used in *Gulp* or as an independent function.
+The _HTinliner_ can be used with [Gulp] or as an independent function.
 It supports the following options:
 
 * `inlineStylesheets`  
@@ -48,17 +47,21 @@ The default options are:
 }
 ```
 
-The inlining only takes place if the URL, referencing the stylesheet, script, or SVG image, is a relative URL. 
+The inlining only takes place if the URL, referencing the stylesheet, script, or SVG image, is a relative URL.
 
 If a `script` tag already has some content, than an aditional `script` tag
-with the referenced script is inserted before the referencing tag 
+with the referenced script is inserted before the referencing tag
 and the `src` attribute is removed from the referencing tag.
 
-### Usage in Gulp
+## Interface
 
-To use HTinliner in Gulp, it can be called with no or one argument:
+HTInliner provides its API with [GulpText _simple_][gulp-text-simple].
 
-`htinliner([opt])`
+### Usage with Gulp
+
+To use _HTinliner_ in [Gulp], it can be called with no or one argument:
+
+`htinliner([options])`
 
 where the optional argument represents the option object.
 
@@ -73,17 +76,15 @@ gulp.task('default', function() {
 });
 ```
 
-### Usage as an independent function
+### Usage as a function
 
-To use HTinliner as an independent function, it can be called with
-two or three arguments.
+To use _HTinliner_ as a function, it can be called with one or two arguments.
 
-`htinliner(data, basePath[, opt])`
+`htinliner(html, [options])`
 
-* where the first argument `data` accepts a string with the HTML markup or a `Buffer` object, 
-* the second argument `basePath` accepts a string with the file or foldername
-which is the reference for the relative URLs in the HTML markup,
-* and the optional third argument represents the option object.
+* where the first argument `html` accepts a string with the HTML markup,
+* the second argument `options` accepts a map with the attribute `sourceFile`,
+which is the reference for the relative URLs in the HTML markup.
 
 ```js
 var fs = require('fs');
@@ -93,10 +94,31 @@ var filename = 'src/example.html';
 fs.readFile(filename, function(err, data) {
     if (err) { throw err; }
 
-    var result = htinliner(data, filename);
+    var result = htinliner(data, { sourcePath: filename });
 
     fs.writeFile('standalone.html', result, function(err, data) {
         if (err) { throw err; }
     });
-});
+}, 'utf-8');
 ```
+
+### Transform a file directly
+
+To use _HTinliner_ to transform an HTML file directly, use the function `.readFileSync(path, [options)`.
+
+``` js
+var htinliner = require('htinline');
+
+var filename = 'src/example.html';
+var result = htinliner.readFileSync(filename);
+```
+
+## License
+
+_HTinliner_ is published under the MIT license.
+
+[npm-url]: https://www.npmjs.com/package/htinliner
+[npm-img]: https://img.shields.io/npm/v/htinliner.svg
+[travis-img]: https://img.shields.io/travis/mastersign/htinliner/master.svg
+[travis-url]: https://travis-ci.org/mastersign/htinliner
+[Gulp]: http://gulp.js
