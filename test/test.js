@@ -37,7 +37,7 @@ describe('htinliner', function () {
 		it('should inline the referenced files', function () {
 			var sourcePath = testDataPath('doc.html');
 			var source = loadTextFile(sourcePath);
-			result = inliner(source, { sourcePath: sourcePath });
+			var result = inliner(source, { sourcePath: sourcePath });
 			checkResult(result, 'htinliner');
 		});
 
@@ -48,7 +48,7 @@ describe('htinliner', function () {
 		it('should inline the referenced files', function () {
 			var sourcePath = testDataPath('doc.html');
 			var source = loadTextFile(sourcePath);
-			result = inliner(source, {
+			var result = inliner(source, {
 				sourcePath: sourcePath,
 				svgWrapClass: 'my-test-class'
 			});
