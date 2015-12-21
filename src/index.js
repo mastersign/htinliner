@@ -153,7 +153,7 @@ var inline = function(htmlSource, sourcePath, opt) {
 };
 
 var htinliner = textTransformation(function (text, options) {
-	var sourcePath = (options && options.sourcePath) ? options.sourcePath : './unknown';
+	var sourcePath = (options && options.sourcePath) ? options.sourcePath : '.';
 	return inline(text, sourcePath, options);
 });
 
