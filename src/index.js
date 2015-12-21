@@ -1,4 +1,4 @@
-/* globals require */
+/* globals require, Buffer */
 
 var path = require('path');
 var fs = require('fs');
