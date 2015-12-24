@@ -43,7 +43,8 @@ The default options are:
     svgRemoveSize: false,
     svgWrap: true,
     svgWrapElement: 'span',
-    svgWrapClass: 'htinliner'
+    svgWrapClass: 'htinliner',
+	throwOnNotFound: false
 }
 ```
 
