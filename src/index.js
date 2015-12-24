@@ -13,7 +13,8 @@ var defOpt = {
 	svgRemoveSize: false,
 	svgWrap: true,
 	svgWrapElement: 'span',
-	svgWrapClass: 'htinliner'
+	svgWrapClass: 'htinliner',
+	throwOnNotFound: false
 };
 
 var option = function(name, opt) {
@@ -69,10 +70,17 @@ var getPathFromUrl = function(src, ext) {
 
 var inline = function(htmlSource, sourcePath, opt) {
 	var $;
-	var basePath = fs.lstatSync(sourcePath).isDirectory() ?
+	var basePath = fs.statSync(sourcePath).isDirectory() ?
 		sourcePath : path.dirname(sourcePath);
 	var buildSrcPath = function(src) {
 		return path.resolve(basePath, src);
+	};
+	var checkSrcPath = function(path) {
+		try {
+			return fs.statSync(path).isFile();
+		} catch (e) {
+			return false;
+		}
 	};
 	var svgs = {};
 	var svgId;
@@ -90,15 +98,20 @@ var inline = function(htmlSource, sourcePath, opt) {
 			var styleDoc, styleTag, typeAttr;
 			var styleSource;
 			if (!src) return;
-			styleDoc = cheerio.load('<style></style>');
-			styleTag = styleDoc('style');
-			typeAttr = $(elem).attr('type');
-			if (typeAttr) {
-				styleTag.attr('type', typeAttr);
+			var srcPath = buildSrcPath(src);
+			if (checkSrcPath(srcPath)) {
+				styleDoc = cheerio.load('<style></style>');
+				styleTag = styleDoc('style');
+				typeAttr = $(elem).attr('type');
+				if (typeAttr) {
+					styleTag.attr('type', typeAttr);
+				}
+				styleSource = fs.readFileSync(srcPath, 'utf8');
+				styleTag.append('\n' + styleSource);
+				$(elem).replaceWith(styleDoc.html());
+			} else if (opt.throwOnNotFound) {
+				throw new Error('Stylesheet reference not found: ' + src);
 			}
-			styleSource = fs.readFileSync(buildSrcPath(src), 'utf8');
-			styleTag.append('\n' + styleSource);
-			$(elem).replaceWith(styleDoc.html());
 		});
 	}
 	if (option('inlineScripts', opt)) {
@@ -107,17 +120,22 @@ var inline = function(htmlSource, sourcePath, opt) {
 			var scriptDoc, scriptTag;
 			var scriptSource;
 			if (!src) return;
-			scriptSource = fs.readFileSync(buildSrcPath(src), 'utf8');
-			scriptDoc = cheerio.load('<script></script>');
-			scriptTag = scriptDoc('script');
-			scriptTag.append('\n' + scriptSource);
-			scriptTag.attr('type', $(elem).attr('type'));
-			scriptTag.attr('language', $(elem).attr('language'));
-			if ($(elem).contents().length > 0) {
-				$(elem).removeAttr('src');
-				$(elem).before(scriptDoc.html());
-			} else {
-				$(elem).replaceWith(scriptDoc.html());
+			var srcPath = buildSrcPath(src);
+			if (checkSrcPath(srcPath)) {
+				scriptSource = fs.readFileSync(srcPath, 'utf8');
+				scriptDoc = cheerio.load('<script></script>');
+				scriptTag = scriptDoc('script');
+				scriptTag.append('\n' + scriptSource);
+				scriptTag.attr('type', $(elem).attr('type'));
+				scriptTag.attr('language', $(elem).attr('language'));
+				if ($(elem).contents().length > 0) {
+					$(elem).removeAttr('src');
+					$(elem).before(scriptDoc.html());
+				} else {
+					$(elem).replaceWith(scriptDoc.html());
+				}
+			} else if (opt.throwOnNotFound) {
+				throw new Error('Script reference not found: ' + src);
 			}
 		});
 	}
@@ -131,18 +149,23 @@ var inline = function(htmlSource, sourcePath, opt) {
 			var replaceId = 'htinliner_svg_id_' + cnt;
 			cnt = cnt + 1;
 			if (!src) return;
-			svgData = fs.readFileSync(buildSrcPath(src));
-			svgSource = fixSvgSize(svgData, option('svgRemoveSize', opt), width, height);
-			if (option('svgWrap', opt)) {
-				prefix = '<' + option('svgWrapElement', opt) + ' class="' +
-					option('svgWrapClass', opt) + '">';
-				postfix = '</' + option('svgWrapElement', opt) + '>';
-			} else {
-				prefix = '';
-				postfix = '';
+			var srcPath = buildSrcPath(src);
+			if (checkSrcPath(srcPath)) {
+				svgData = fs.readFileSync(srcPath, 'utf8');
+				svgSource = fixSvgSize(svgData, option('svgRemoveSize', opt), width, height);
+				if (option('svgWrap', opt)) {
+					prefix = '<' + option('svgWrapElement', opt) + ' class="' +
+						option('svgWrapClass', opt) + '">';
+					postfix = '</' + option('svgWrapElement', opt) + '>';
+				} else {
+					prefix = '';
+					postfix = '';
+				}
+				svgs[replaceId] = prefix + svgSource + postfix;
+				$(elem).replaceWith(replaceId);
+			} else if (opt.throwOnNotFound) {
+				throw new Error('SVG image reference not found: ' + src);
 			}
-			svgs[replaceId] = prefix + svgSource + postfix;
-			$(elem).replaceWith(replaceId);
 		});
 	}
 	result = $.html();
