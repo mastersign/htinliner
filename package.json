@@ -1,6 +1,6 @@
 {
   "name": "htinliner",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "inlining linked CSS files, linked script files, and SVG images into HTML documents",
   "readme": "README.md",
   "main": "src/index.js",
