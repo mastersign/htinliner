@@ -23,9 +23,12 @@ It supports the following options:
 * `svgRemoveSize`  
   a boolean indicating, that the specified width and height should be removed
   from the SVG markup.
+* `svgLimitSize`
+  a boolean indicating, that the specified size, or if none given, the SVG element size,
+  is copied to the CSS properties `max-width` and `max-height`.
 * `svgWrap`  
   a boolean indicating, that the SVG markup should be wrapped in an additional
-  HTML element, which is specified in the option `svgWrapElement`, 
+  HTML element, which is specified in the option `svgWrapElement`,
   and the CSS class specified in the option `svgWrapClass`.
 * `svgWrapElement`  
   a string with the name of the HTML element, wrapping the inlined SVG markup.
@@ -41,6 +44,7 @@ The default options are:
     inlineSvgImages: true,
     basePath; null,
     svgRemoveSize: false,
+    svgLimitSize: false,
     svgWrap: true,
     svgWrapElement: 'span',
     svgWrapClass: 'htinliner',

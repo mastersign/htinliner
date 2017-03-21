@@ -11,6 +11,7 @@ var defOpt = {
 	inlineScripts: true,
 	inlineSvgImages: true,
 	svgRemoveSize: false,
+	svgLimitSize: false,
 	svgWrap: true,
 	svgWrapElement: 'span',
 	svgWrapClass: 'htinliner',
@@ -27,16 +28,18 @@ var fixLengthUnit = function(value, defUnit) {
 	return value.match(/^\d+$/) ? (value + (defUnit || 'px')) : value;
 };
 
-var fixSvgSize = function(svgSource, remove, width, height) {
+var fixSvgSize = function(svgSource, removeSize, limitSize, imgWidth, imgHeight) {
 	var $ = cheerio.load(svgSource, { xmlMode: true,  decodeEntities: false });
 	var svg = $('svg');
-	width = fixLengthUnit(width);
-	height = fixLengthUnit(height);
-	if (remove) {
-		svg.removeAttr('width');
-		svg.removeAttr('height');
+	width = fixLengthUnit(imgWidth);
+	height = fixLengthUnit(imgHeight);
+	limitWidth = fixLengthUnit(imgWidth || svg.attr('width') || svg.css('width'));
+	limitHeight = fixLengthUnit(imgHeight || svg.attr('height') || svg.css('height'));
+	if (removeSize) {
 		svg.css('width', null);
 		svg.css('height', null);
+		svg.css('max-width', null);
+		svg.css('max-height', null);
 	} else {
 		if (width) {
 			svg.css('width', width);
@@ -48,9 +51,13 @@ var fixSvgSize = function(svgSource, remove, width, height) {
 		} else if (!svg.css('height')) {
 			svg.css('height', fixLengthUnit(svg.attr('height')));
 		}
-		svg.removeAttr('width');
-		svg.removeAttr('height');
 	}
+	if (limitSize) {
+		svg.css('max-width', limitWidth);
+		svg.css('max-height', limitHeight);
+	}
+	svg.removeAttr('width');
+	svg.removeAttr('height');
 	return $.xml('svg');
 };
 
@@ -152,7 +159,9 @@ var inline = function(htmlSource, sourcePath, opt) {
 			var srcPath = buildSrcPath(src);
 			if (checkSrcPath(srcPath)) {
 				svgData = fs.readFileSync(srcPath, 'utf8');
-				svgSource = fixSvgSize(svgData, option('svgRemoveSize', opt), width, height);
+				svgSource = fixSvgSize(svgData,
+					option('svgRemoveSize', opt), option('svgLimitSize', opt),
+					width, height);
 				if (option('svgWrap', opt)) {
 					prefix = '<' + option('svgWrapElement', opt) + ' class="' +
 						option('svgWrapClass', opt) + '">';
