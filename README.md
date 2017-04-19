@@ -60,7 +60,7 @@ and the `src` attribute is removed from the referencing tag.
 
 ## Interface
 
-_HTinliner_ provides its API with [GulpText _simple_][gulp-text-simple] v0.3.
+_HTinliner_ provides its API with [GulpText _simple_][gulp-text-simple].
 
 ### Usage with Gulp
 
