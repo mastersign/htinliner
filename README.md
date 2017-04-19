@@ -48,7 +48,7 @@ The default options are:
     svgWrap: true,
     svgWrapElement: 'span',
     svgWrapClass: 'htinliner',
-	throwOnNotFound: false
+    throwOnNotFound: false
 }
 ```
 
