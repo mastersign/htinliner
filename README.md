@@ -1,6 +1,7 @@
 # HTinliner
 
 [![npm package][npm-img]][npm-url]
+[![dependency status][libraries-img]][libraries-url]
 [![build status][travis-img]][travis-url]
 
 > inlining linked CSS files, linked script files, and SVG images into HTML documents
@@ -124,6 +125,8 @@ _HTinliner_ is published under the MIT license.
 
 [npm-url]: https://www.npmjs.com/package/htinliner
 [npm-img]: https://img.shields.io/npm/v/htinliner.svg
+[libraries-url]: https://libraries.io/npm/htinliner
+[libraries-img]: https://img.shields.io/librariesio/github/mastersign/htinliner.svg
 [travis-img]: https://img.shields.io/travis/mastersign/htinliner/master.svg
 [travis-url]: https://travis-ci.org/mastersign/htinliner
 [Gulp]: http://gulpjs.com
