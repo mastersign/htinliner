@@ -152,6 +152,9 @@ var inline = function(htmlSource, sourcePath, opt) {
 			var width = $(elem).css('width') || $(elem).attr('width');
 			var height = $(elem).css('height') || $(elem).attr('height');
 			var svgData, svgSource;
+			var wrap = option('svgWrap', opt);
+			var wrapElement = option('svgWrapElement', opt);
+			var wrapClass = option('svgWrapClass', opt);
 			var prefix, postfix;
 			var replaceId = 'htinliner_svg_id_' + cnt;
 			cnt = cnt + 1;
@@ -162,10 +165,13 @@ var inline = function(htmlSource, sourcePath, opt) {
 				svgSource = fixSvgSize(svgData,
 					option('svgRemoveSize', opt), option('svgLimitSize', opt),
 					width, height);
-				if (option('svgWrap', opt)) {
-					prefix = '<' + option('svgWrapElement', opt) + ' class="' +
-						option('svgWrapClass', opt) + '">';
-					postfix = '</' + option('svgWrapElement', opt) + '>';
+				if (wrap) {
+					if (wrapClass) {
+						prefix = '<' + wrapElement + ' class="' +	wrapClass + '">';
+					} else {
+						prefix = '<' + wrapElement + '>';
+					}
+					postfix = '</' + wrapElement + '>';
 				} else {
 					prefix = '';
 					postfix = '';
