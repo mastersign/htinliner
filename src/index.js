@@ -19,7 +19,7 @@ var defOpt = {
 };
 
 var option = function(name, opt) {
-	return opt ? (opt[name] || defOpt[name]) : defOpt[name];
+	return opt ? (opt[name] !== undefined ? opt[name] : defOpt[name]) : defOpt[name];
 };
 
 var fixLengthUnit = function(value, defUnit) {
