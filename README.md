@@ -24,7 +24,7 @@ It supports the following options:
 * `svgRemoveSize`  
   a boolean indicating, that the specified width and height should be removed
   from the SVG markup.
-* `svgLimitSize`
+* `svgLimitSize`  
   a boolean indicating, that the specified size, or if none given, the SVG element size,
   is copied to the CSS properties `max-width` and `max-height`.
 * `svgWrap`  
