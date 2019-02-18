@@ -32,8 +32,9 @@
   "homepage": "https://github.com/mastersign/htinliner",
   "dependencies": {
     "cheerio": "^0.22.0",
-    "gulp-text-simple": "^0.4.0"
+    "gulp-text-simple": "^0.5.2"
   },
   "devDependencies": {
+    "mocha": "^5.2.0"
   }
 }
