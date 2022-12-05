@@ -35,6 +35,6 @@
     "gulp-text-simple": "^0.5.2"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "mocha": "^10.1.0"
   }
 }
